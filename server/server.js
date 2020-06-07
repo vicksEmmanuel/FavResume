@@ -47,7 +47,7 @@ app.post('/generate', (req, res) => {
   var data = req.body
 
   //Reads the Base Template from the Views Folder
-  var template = hbs.compile(fs.readFileSync('././views/gen.hbs', 'utf8'));
+  var template = hbs.compile(fs.readFileSync(Template.choosePathToEngine(data), 'utf8'));
 
   //Proccessing the base template with the content
   var html = template({content: Template.chooseTemplate(data)})
