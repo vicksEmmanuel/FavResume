@@ -248,9 +248,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 `;
-    editor.setValue(sample);
+    //Getting from localstorage
+    var jsonString = localStorage.getItem("resumeObject");
+
+    if (!isEmpty(JSON.parse(jsonString))) {
+        editor.setValue(jsonString);
+    } else {
+        editor.setValue(sample);
+    }
 
 
+    function isEmpty(obj) {
+        for(var key in obj) {
+            if(obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    }
   
    function screen_resize() {
     var h = parseInt(window.innerHeight);
@@ -361,6 +375,8 @@ json = editor.getValue();
                     window.document.location.href = response.filename;
                   generate.innerHTML = temp;
                     console.log('generated');
+                    //Save data to local storage for easy retrieval
+                    localStorage.setItem("resumeObject", JSON.stringify(data,undefined,4));
                 })
                 .catch((err) => console.log(err));
 
