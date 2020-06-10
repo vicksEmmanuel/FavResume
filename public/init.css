@@ -156,10 +156,6 @@ ol li{
 .theme-label {
     font-size: 10px;
 }
-::-webkit-scrollbar {
-    width: 2px;
-    height:7px;
-}
 .color-theme {
     font-style: italic;
     width: 100%;
@@ -169,13 +165,101 @@ ol li{
 }
 .theme-list {
     padding-left: 5px;
-    font-weight: lightertheme-pane;
+    font-weight: lighter;
     cursor: pointer;
 }
 .theme-list:hover {
     background-color: rgb(99, 117, 117);
     color: white;
 }
+#option {
+    position: fixed;
+    right: 0px;
+    top: 15%;
+    display: flex;
+    z-index: 1000;
+    flex-direction: row;
+}
+#option-icon {
+    cursor: pointer;
+    position: relative;
+    top: 155px;
+}
+#option-icon-x {
+    width:30px;
+    height: 30px;
+    cursor: pointer;
+    fill: silver;
+}
+#option-pane {
+    width: 0vh;
+    height: 60vh;
+    background-color: red;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: #aff6cf;
+background-image: linear-gradient(315deg, #aff6cf 0%, #9f98e8 74%);
+}
+.template {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+}
+.template-label {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: bold;
+    margin-left: 4px;
+    font-style: italic;
+}
+.doc {
+    padding: 5px;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 5px;
+    justify-content: center;
+    align-content: center;
+    cursor: pointer;
+    margin: 2px;
+}
+.select-doc {
+    background-color: rgba(96, 236, 31, 0.897);
+}
+#docx-icon {
+    width: 30px;
+    height: 30px;
+    align-self: center;
+}
+#pdf-icon {
+    width: 30px;
+    height: 30px;
+    align-self: center;
+    fill: #FDFEFD;
+}
+.template-engine {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-right: 10px;
+    overflow-x: scroll;
+    margin-left: 10px;
+}
+.x-eng {
+    width: 70%;
+    height: 80%;
+    margin-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.select-template {
+    border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+}
+::-webkit-scrollbar {
+    width: 2px;
+}
+
 @media only screen and (max-width: 600px) {
  
  .top{
