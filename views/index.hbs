@@ -49,11 +49,23 @@
   <li><a class="btn tooltipped btn-floating blue" data-position="left" data-tooltip="Clear" id="clear"><i class="material-icons">remove_circle_outline
 </i></a></li>      
 </div>
-  
+<div id="theme">
+    <span class="theme-label"><i>theme</i></span>
+    <div id="theme-title">
+        monokai
+    </div>
+</div>
+<div id="theme-pane">
+    <div class="diff-theme" id="light">
+        <div class="color-theme">light themes</div>
+    </div>
+    <div class="diff-theme" id="dark">
+        <div class="color-theme">dark themes</div>
+    </div>
+</div>
 <div id="divider"></div>
 <div id="editor" class="uk-card uk-width-1-1 uk-card-default uk-card-body" name="json"></div>
 <a id="download_link" href="#" target="_blank" style="display:none"></a>
-
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
@@ -67,7 +79,13 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/monokai");
+    let currentTheme = 'monokai';
+    let themeStorage = localStorage.getItem('theme');
+    if (themeStorage != null) {
+        currentTheme = themeStorage;
+    }
+    themeHandler(currentTheme);
+    editor.setTheme(`ace/theme/${currentTheme}`);
     editor.session.setMode("ace/mode/json"); 
     var sample = ` {
         "template": "3",
@@ -257,6 +275,27 @@ document.addEventListener("DOMContentLoaded", function () {
         editor.setValue(sample);
     }
 
+    let lightTheme = ["xcode", "chrome","cloud", "tomorrow", "textmate", "sqlserver", "solarized_light", "kuroir","katzenmilch","iplastic","github","eclipse","dreamweaver","dawn","crimson_editor"];
+    let darkTheme =  ["twilight","ambiance","monokai","solarized_dark","terminal", "pastel_on_dark","kr_theme","mono_industrial","merbivore","gob","gruvbox","idle_fingers", "merbivore_soft","dracula","cobalt", "nord_dark","tomorrow_night","tomorrow_night_eighties","tomorrow_night_blue","tomorrow_night_bright", "chaos", "vibrant_ink", "clouds_midnight"];
+
+    let theme = (div, arr) => {
+        arr.forEach(key => {
+            $(div).
+                append(`<div class="theme-list theme-list-${key}">${key}</div>`);
+            $('<script>')
+                .attr('type','text/javascript')
+                .html(`$(".theme-list-${key}").click(()=>{ 
+                    $('#theme-title').text('${key}');
+                    let x = ace.edit("editor");
+                    x.setTheme("ace/theme/${key}");
+                    localStorage.setItem('theme','${key}');
+                })`)
+                .appendTo(`.theme-list-${key}`)
+        });   
+    }
+
+    theme('#light', lightTheme);
+    theme('#dark', darkTheme);
 
     function isEmpty(obj) {
         for(var key in obj) {
@@ -266,6 +305,13 @@ document.addEventListener("DOMContentLoaded", function () {
         return true;
     }
   
+    function themeHandler(them) {
+        $('#theme-title').text(`${them}`);
+        $('#theme-title').click(() => {
+            $('#theme-pane').toggle(1000);
+        });
+    }
+
    function screen_resize() {
     var h = parseInt(window.innerHeight);
     var w = parseInt(window.innerWidth);
