@@ -177,7 +177,7 @@ ol li{
     right: 0px;
     top: 15%;
     display: flex;
-    z-index: 1000;
+    z-index: 700;
     flex-direction: row;
 }
 #option-icon {
@@ -192,7 +192,7 @@ ol li{
     fill: silver;
 }
 #option-pane {
-    width: 0vh;
+    width: 0;
     height: 60vh;
     background-color: red;
     border-top-left-radius: 10px;
@@ -260,8 +260,129 @@ background-image: linear-gradient(315deg, #aff6cf 0%, #9f98e8 74%);
     width: 2px;
 }
 
+.tut {
+    position: fixed;
+    right: 0px;
+    width: 40vh;
+    height: 70px;
+    border-radius: 10px;
+    top: 15%;
+    z-index: 1000;
+    background-color: rgba(0,0,0,0.5);
+    cursor: pointer;
+    display: none;
+}
+#tut1 {
+    position: fixed;
+    left: 10px;
+}
+#tut2 {
+    position: fixed;
+    right: 30%;
+}
+#tut3 {
+    position: fixed;
+    right: 30%;
+    top: 38%;
+}
+#tut4 {
+    position: fixed;
+    left: 20px;
+    top: 82%;
+}
+#tut5 {
+    position: fixed;
+    right: 10%;
+    top: 82%;
+}
+.tut-body {
+    height: 70%;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+}
+#tut-arrow {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: -3px;
+    fill: white;
+    float: right;
+    margin-right: 10px;
+}
+.tut-num {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 30%;
+    width: 100%;
+}
+.tut-num-left {
+    width: 50%;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+.in-num {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 50%;
+    color: white;
+    border: solid 1px white;
+}
+#blocker {
+    position: fixed;
+    background-color: rgba(0,0,0,0.2);
+    width: 1000vh;
+    z-index: 1000;
+    height: 1000vh;
+    display: none;
+}
+
 @media only screen and (max-width: 600px) {
- 
+    #tut2 {
+        position: fixed;
+        right: 37%;
+    }
+    .in-num {
+        width: 15px;
+        height: 15px;
+        font-size: 9px;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 50%;
+        color: white;
+        border: solid 1px white;
+    }
+    .tut-body {
+        height: 70%;
+        font-size: 9px;
+        font-weight: bold;
+        padding: 10px;
+        color: white;
+        text-align: center;
+        padding-top: 10px;
+    }
+    #tut-arrow {
+        width: 15px;
+        height: 15px;
+        position: relative;
+        top: -3px;
+        fill: white;
+        float: right;
+        margin-right: 10px;
+    }
+    .tut {
+        width: 25vh;
+        height: 50px;
+        border-radius: 5px;
+        top: 15%;
+    }
  .top{
     margin-top:3rem;
 }
