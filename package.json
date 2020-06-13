@@ -17,6 +17,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.16.3",
     "extract-zip": "1.6.5",
+    "fs-extra": "1.0.0",
     "hbs": "^4.0.1",
     "html-docx-js": "^0.3.1",
     "html-pdf": "^2.2.0",
