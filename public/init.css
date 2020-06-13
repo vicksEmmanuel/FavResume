@@ -343,8 +343,88 @@ background-image: linear-gradient(315deg, #aff6cf 0%, #9f98e8 74%);
     height: 1000vh;
     display: none;
 }
-
+#email-form-pane {
+    position: fixed;
+    background-color: rgba(0,0,0,0.5);
+    top: 0px;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+#email-form {
+    position: relative;
+    width: 50%;
+    height: 70%;
+    background-color: white;
+    border-radius: 10px;
+    left: 25%;
+    top: 25%;
+    padding: 20px;
+}
+.form, .form-submit{
+    margin: 5px;
+    font-size: 14px;
+    color: slategray;
+    font-weight: bolder;
+}
+.form-submit {
+    text-align: center;
+}
+input {
+    border: 0px solid black;
+    font-size: 14px;
+    font-weight: bold;
+    color: lightblue;
+}
+textarea {
+    height: 100px;
+    padding: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: slategray;
+}
+.submit-and-g{
+    text-align: center;
+    background-color: yellow;
+    color: slateblue;
+    width: 100%;
+    height: 50px;
+    padding-top: 13px;
+    position: relative;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
 @media only screen and (max-width: 600px) {
+    input {
+        border: 0px solid black;
+        font-size: 10px;
+        font-weight: bold;
+        color: lightblue;
+    }
+    textarea {
+        height: 100px;
+        padding: 20px;
+        font-size: 14px;
+        font-weight: lighter;
+        color: slategray;
+    }
+    .form, .form-submit{
+        margin: 3px;
+        font-size: 10px;
+        color: slategray;
+        font-weight: bolder;
+    }
+    #email-form {
+        position: relative;
+        width: 70%;
+        height: 70%;
+        background-color: white;
+        border-radius: 10px;
+        left: 15%;
+        top: 10%;
+    }
     #tut2 {
         position: fixed;
         right: 37%;
@@ -378,6 +458,14 @@ background-image: linear-gradient(315deg, #aff6cf 0%, #9f98e8 74%);
         margin-right: 10px;
     }
     .tut {
+        position: fixed;
+        right: 0px;
+        border-radius: 10px;
+        top: 15%;
+        z-index: 1000;
+        background-color: rgba(0,0,0,0.5);
+        cursor: pointer;
+        display: none;
         width: 25vh;
         height: 50px;
         border-radius: 5px;

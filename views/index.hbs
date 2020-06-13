@@ -43,6 +43,8 @@
 <ul>
    
 <li><a class="btn tooltipped btn-floating red" data-position="left" data-tooltip="Download" id="generate"><i class="material-icons">publish</i></a></li>
+
+<li><a class="btn tooltipped btn-floating green" data-position="left" data-tooltip="Generate and Send Email" id="generate-and-send"><i class="material-icons">email</i></a></li>
                    
 <li><a class="btn tooltipped btn-floating yellow darken-1" data-position="left" data-tooltip="Reset" id="reset"><i class="material-icons">refresh</i></a></li>  
   
@@ -245,6 +247,33 @@
     </div>
 </div>
 <div id="blocker"></div>
+<div id="email-form-pane">
+    <div id="email-form">
+        <div class="form">
+            <div class="form-label">RECRUITER EMAIL ADDRESS</div>
+            <div class="form-input">
+                <input type="email" id="who" />
+            </div>
+        </div>
+        <div class="form">
+            <div class="form-label">ADD TITLE</div>
+            <div class="form-input">
+                <input type="text" id="subject" />
+            </div>
+        </div>
+        <div class="form">
+            <div class="form-label">COVER LETTER</div>
+            <div class="form-input">
+                <textarea id="coverLt"></textarea>
+            </div>
+        </div>
+        <div class="form-submit">
+            <div class="submit-and-g">
+                Generate and Submit
+            </div>
+        </div>
+    </div>
+</div>
 <div class="tut" id="tut1">
     <div class="tut-num">
         <div class="tut-num-left">
@@ -718,6 +747,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     templateAndDocumentHandler();
     appTutorialHandler();
+    generateAndSendEmailHandler();
 
     function appTutorialHandler() {
         let user = localStorage.getItem('appTuts');
@@ -852,6 +882,26 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    let who, subject, coevrLt;
+    function generateAndSendEmailHandler () {
+        $('#generate-and-send').click(event => {
+            event.stopPropagation();
+            $('#email-form-pane').fadeIn(1000);
+        });
+        $('#email-form-pane').click(event => {
+            event.stopPropagation();
+        });
+        $('.form-submit').click(event => {
+            let regExp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+            if(regExp.test($('#who').val()) && String($('#coverLt').val()).length > 0) {
+                who = $('#who').val();
+                subject = $('#subject').val();
+                coverLt = $("#coverLt").val();
+                handleSubmitAndSendEmail(event);
+            }
+        });
+    }
+
    function screen_resize() {
     var h = parseInt(window.innerHeight);
     var w = parseInt(window.innerWidth);
@@ -912,12 +962,14 @@ document.addEventListener("DOMContentLoaded", function () {
         $('#option-pane').animate({
             width: 0
         })
+        $('#email-form-pane').fadeOut(1000);
     });
-
+    $(document).keyup(function(e) {
+        if (e.key === "Escape") { 
+            $(window).trigger('click');
+        }
+    });
     screen_resize();
-
-
-
 
     function handleReset (e){
         e.preventDefault();
@@ -988,9 +1040,73 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     }
+    function handleSubmitAndSendEmail(e) {
+        e.preventDefault();
+        //det data from editor
+        json = editor.getValue();
+        json = tryParseJSON(json);
 
 
-      function tryParseJSON(jsonString) {
+
+        if (json) {
+            data = json;
+            json.type = docType;
+            json.template = resumeTemplate;
+            json.who = who;
+            json.subject = subject;
+            json.coverLt = coverLt;
+
+            //send to serve
+            const options = {
+                method: "POST",
+                body: JSON.stringify(json),
+                headers: new Headers({
+                'Accept': 'application/json',
+                    "Content-Type": "application/json"
+                })
+            };
+
+            var temp = generate.innerHTML;
+            console.log('generating...');
+
+            fetch("/generate-and-send", options)
+                 .then((response) => response.json())
+                .then((response) => {
+                    if(response.filename) {
+
+                      generate.innerHTML = "Generated";
+
+                    }else {
+                        
+                        generate.innerHTML = "something went wrong";
+
+                    }
+                    if(response.status == 'done') {
+                        window.document.location.href = response.filename;
+                        generate.innerHTML = temp;
+                    }
+                    console.log('generated');
+                    //Save data to local storage for easy retrieval
+                    delete data.type;
+                    delete data.template;
+                    delete data.who;
+                    delete data.subject;
+                    delete data.coverLt;
+                    localStorage.setItem("resumeObject", JSON.stringify(data,undefined,4));
+                    console.log(data);
+                })
+                .catch((err) => console.log(err));
+
+           
+        }
+        else {
+
+        }
+
+
+    }
+
+    function tryParseJSON(jsonString) {
           console.log('Parsed JSON Object Successfully.')
         try {
             var json = JSON.parse(jsonString);
