@@ -92,7 +92,7 @@ app.post('/generate-and-send', (req, res) => {
       Email.sendEmail(emailData, 
         (resp) => {
           return res.json({success: 'done', filename:filename+`.${data.type}`});
-        },
+        }
       );
     },
     (err) => {
