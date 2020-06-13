@@ -1009,7 +1009,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var temp = generate.innerHTML;
             console.log('generating...');
 
-            fetch("https://vicks-favresume-hackathon.herokuapp.com/generate", options)
+            fetch("/generate", options)
                  .then((response) => response.json())
                 .then((response) => {
                     if(response.filename) {
