@@ -864,7 +864,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 //Add image, description and occupation key to the top of the resume object
                 x = x.replace('{', `{
-                    "image": "http://localhost:3000/images/client.png", 
+                    "image": "https://vicks-favresume-hackathon.herokuapp.com/images/client.png", 
                     "description": "I love science fiction, I am a programmer who get things done the right way",
                     "occupation": "Software Developer",
                 `);
@@ -888,7 +888,7 @@ document.addEventListener("DOMContentLoaded", function () {
             event.stopPropagation();
             $('#email-form-pane').fadeIn(1000);
         });
-        $('#email-form-pane').click(event => {
+        $('#email-form').click(event => {
             event.stopPropagation();
         });
         $('.form-submit').click(event => {
@@ -1009,7 +1009,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var temp = generate.innerHTML;
             console.log('generating...');
 
-            fetch("/generate", options)
+            fetch("https://vicks-favresume-hackathon.herokuapp.com/generate", options)
                  .then((response) => response.json())
                 .then((response) => {
                     if(response.filename) {
@@ -1069,7 +1069,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var temp = generate.innerHTML;
             console.log('generating...');
 
-            fetch("/generate-and-send", options)
+            fetch("https://vicks-favresume-hackathon.herokuapp.com/generate-and-send", options)
                  .then((response) => response.json())
                 .then((response) => {
                     if(response.filename) {
@@ -1081,7 +1081,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         generate.innerHTML = "something went wrong";
 
                     }
-                    if(response.status == 'done') {
+                    if(response.success == 'done') {
                         window.document.location.href = response.filename;
                         generate.innerHTML = temp;
                     }
@@ -1093,7 +1093,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     delete data.subject;
                     delete data.coverLt;
                     localStorage.setItem("resumeObject", JSON.stringify(data,undefined,4));
-                    console.log(data);
                 })
                 .catch((err) => console.log(err));
 

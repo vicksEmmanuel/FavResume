@@ -75,6 +75,7 @@ app.post('/generate-and-send', (req, res) => {
   var html = template({content: Template.chooseTemplate(data)})
 
   var filename = `${data.firstname}${data.lastname}${new Date().toLocaleDateString()}`;
+  var file = fs.readFileSync(`./public/${filename+`.${data.type}`}`);
   //create PDF from the above generated html
   Resume.checkTypeOfDocumentAndCreate(
     data.type,
@@ -87,7 +88,7 @@ app.post('/generate-and-send', (req, res) => {
         to: data.who? data.who : '',
         subject: data.subject? data.subject: '',
         text: data.coverLt? data.coverLt: '',
-        attachment: fs.readFileSync(`./public/${filename+`.${data.type}`}`)
+        attachment: file
       }
       Email.sendEmail(emailData, 
         (resp) => {
