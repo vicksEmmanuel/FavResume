@@ -2,10 +2,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
-var timeout = require('connect-timeout')
 var app = express();
 const port = process.env.PORT || 3000;
-//const request = require('request');
+const request = require('request');
 const showdown = require('showdown');
 const Resume = require('../controllers/Document.js');
 const Template = require('../controllers/Template.js');
@@ -21,8 +20,6 @@ app.set('view engine', 'hbs')
 // middleware
 app.use(cors())
 app.use(bodyParser.json());
-app.use(timeout('5s'));
-app.use(haltOnTimedout);
 app.use(express.static(__dirname + "/../public"))
 
 
@@ -44,11 +41,7 @@ app.get('/learn', (req, res) => {
   res.render('learn')
 });
 
-function haltOnTimedout (req, res, next) {
-  if (!req.timedout) next()
-}
-
-app.post('/generate', timeout('30s'), haltOnTimedout, (req, res) => {
+app.post('/generate', (req, res) => {
   var data = req.body
 
   //Reads the Base Template from the Views Folder
@@ -73,7 +66,7 @@ app.post('/generate', timeout('30s'), haltOnTimedout, (req, res) => {
 
 });
 
-app.post('/generate-and-send', timeout('30s'), haltOnTimedout, (req, res) => {
+app.post('/generate-and-send', (req, res) => {
   var data = req.body
   //Reads the Base Template from the Views Folder
   var template = hbs.compile(fs.readFileSync(Template.choosePathToEngine(data), 'utf8'));
@@ -82,7 +75,6 @@ app.post('/generate-and-send', timeout('30s'), haltOnTimedout, (req, res) => {
   var html = template({content: Template.chooseTemplate(data)})
 
   var filename = `${data.firstname}${data.lastname}${new Date().toLocaleDateString()}`;
-  var file = fs.readFileSync(`./public/${filename+`.${data.type}`}`);
   //create PDF from the above generated html
   Resume.checkTypeOfDocumentAndCreate(
     data.type,
@@ -95,7 +87,7 @@ app.post('/generate-and-send', timeout('30s'), haltOnTimedout, (req, res) => {
         to: data.who? data.who : '',
         subject: data.subject? data.subject: '',
         text: data.coverLt? data.coverLt: '',
-        attachment: file
+        attachment: request(`http://https://vicks-favresume-hackathon.herokuapp.com/${filename+`.${data.type}`}`)
       }
       Email.sendEmail(emailData, 
         (resp) => {

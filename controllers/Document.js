@@ -6,7 +6,6 @@ class Document {
     static convertToWord(html, filename, callbackSuccess, callbackError) {
         var docx = htmlDocx.asBlob(html);
         fs.mkdir(`./public/${filename.substr(0,filename.lastIndexOf('/'))}`, { recursive: true }, async (err) => {
-            console.log('we are here')
             await fs.writeFile(`./public/${filename}.docx`, docx, err => {
                 if (err) {
                     console.log(err);
