@@ -87,7 +87,7 @@ app.post('/generate-and-send', (req, res) => {
         to: data.who? data.who : '',
         subject: data.subject? data.subject: '',
         text: data.coverLt? data.coverLt: '',
-        attachment: request(`http://https://vicks-favresume-hackathon.herokuapp.com/${filename+`.${data.type}`}`)
+        attachment: request(`https://vicks-favresume-hackathon.herokuapp.com/${filename+`.${data.type}`}`)
       }
       Email.sendEmail(emailData, 
         (resp) => {
