@@ -1021,14 +1021,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         generate.innerHTML = "something went wrong";
 
                     }
-                    window.document.location.href = response.filename;
+                    window.document.location = response.filename;
                   generate.innerHTML = temp;
                     console.log('generated');
                     //Save data to local storage for easy retrieval
                     delete data.type;
                     delete data.template;
                     localStorage.setItem("resumeObject", JSON.stringify(data,undefined,4));
-                    console.log(data);
                 })
                 .catch((err) => console.log(err));
 
@@ -1069,7 +1068,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var temp = generate.innerHTML;
             console.log('generating...');
 
-            fetch("https://vicks-favresume-hackathon.herokuapp.com/generate-and-send", options)
+            fetch("/generate-and-send", options)
                  .then((response) => response.json())
                 .then((response) => {
                     if(response.filename) {
@@ -1082,7 +1081,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     }
                     if(response.success == 'done') {
-                        window.document.location.href = response.filename;
+                        window.document.location = response.filename;
                         generate.innerHTML = temp;
                     }
                     console.log('generated');
