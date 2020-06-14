@@ -1020,14 +1020,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         generate.innerHTML = "something went wrong";
 
                     }
-                    if (data.type == 'docx') {
-                        console.log(response.filename);
-                        $('body').append(`<a id="link" href="${response.filename}">&nbsp;</a>`);
-                        $('#link')[0].click();
-                    } else {
-                        window.document.location = response.filename;
-                        generate.innerHTML = temp;
-                    }
+                    window.document.location = response.filename;
+                  generate.innerHTML = temp;
                     console.log('generated');
                     //Save data to local storage for easy retrieval
                     delete data.type;
