@@ -5,11 +5,11 @@ const fs = require('fs');
 class Document {
     static convertToWord(html, filename, callbackSuccess, callbackError) {
         var docx = htmlDocx.asBlob(html);
-        fs.mkdir(`./public/${filename.substr(0,filename.lastIndexOf('/'))}`, { recursive: true }, (err) => {
+        fs.mkdir(`./public/${filename.substr(0,filename.lastIndexOf('/'))}`, { recursive: true }, async (err) => {
             if (err) {
                 return callbackError(err);
             }
-            fs.writeFile(`./public/${filename}.docx`, docx, err => {
+            await fs.writeFile(`./public/${filename}.docx`, docx, err => {
                 if (err) {
                     console.log(err);
                     return callbackError(err);
