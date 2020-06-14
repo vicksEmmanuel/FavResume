@@ -48,7 +48,7 @@ function haltOnTimedout (req, res, next) {
   if (!req.timedout) next()
 }
 
-app.post('/generate', timeout('5s'), haltOnTimedout, (req, res) => {
+app.post('/generate', timeout('90s'), haltOnTimedout, (req, res) => {
   var data = req.body
 
   //Reads the Base Template from the Views Folder
@@ -73,7 +73,7 @@ app.post('/generate', timeout('5s'), haltOnTimedout, (req, res) => {
 
 });
 
-app.post('/generate-and-send', timeout('5s'), haltOnTimedout, (req, res) => {
+app.post('/generate-and-send', timeout('90s'), haltOnTimedout, (req, res) => {
   var data = req.body
   //Reads the Base Template from the Views Folder
   var template = hbs.compile(fs.readFileSync(Template.choosePathToEngine(data), 'utf8'));
