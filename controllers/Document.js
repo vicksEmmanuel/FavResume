@@ -5,7 +5,7 @@ const fs = require('fs');
 class Document {
     static convertToWord(html, filename, callbackSuccess, callbackError) {
         var docx = htmlDocx.asBlob(html);
-        fs.mkdir(`./public/${filename.substr(0,filename.lastIndexOf('/'))}`, { recursive: true }, async function (err) {
+        fs.mkdir(`./public/${filename.substr(0,filename.lastIndexOf('/'))}`, { recursive: true }, async (err) => {
             if (err) {
                 return callbackError(err);
             }
