@@ -4,14 +4,13 @@ const fs = require('fs');
 
 class Document {
     static convertToWord(html, filename, callbackSuccess, callbackError) {
-        console.log('entered here');
         var docx = htmlDocx.asBlob(html);
-        console.log('here');
         fs.mkdir(`./public/${filename.substr(0,filename.lastIndexOf('/'))}`, { recursive: true }, async (err) => {
             if (err) {
+                console.log(err);
                 return callbackError(err);
             }
-            console.log('we ae ehre')
+            console.log('we are here')
             await fs.writeFile(`./public/${filename}.docx`, docx, err => {
                 if (err) {
                     console.log(err);
