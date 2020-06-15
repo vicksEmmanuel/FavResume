@@ -21,7 +21,7 @@ app.set('view engine', 'hbs')
 // middleware
 app.use(cors())
 app.use(bodyParser.json());
-app.use(timeout('5s'));
+app.use(timeout('100s'));
 app.use(haltOnTimedout);
 app.use(express.static(__dirname + "/../public"))
 
@@ -48,7 +48,7 @@ function haltOnTimedout (req, res, next) {
   if (!req.timedout) next()
 }
 
-app.post('/generate', timeout('30s'), haltOnTimedout, (req, res) => {
+app.post('/generate', timeout('100s'), haltOnTimedout, (req, res) => {
   var data = req.body
 
   //Reads the Base Template from the Views Folder
@@ -73,7 +73,7 @@ app.post('/generate', timeout('30s'), haltOnTimedout, (req, res) => {
 
 });
 
-app.post('/generate-and-send', timeout('30s'), haltOnTimedout, (req, res) => {
+app.post('/generate-and-send', timeout('100s'), haltOnTimedout, (req, res) => {
   var data = req.body
   //Reads the Base Template from the Views Folder
   var template = hbs.compile(fs.readFileSync(Template.choosePathToEngine(data), 'utf8'));
