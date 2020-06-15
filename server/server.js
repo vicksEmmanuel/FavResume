@@ -2,7 +2,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
-var timeout = require('connect-timeout')
 var app = express();
 const port = process.env.PORT || 3000;
 const request = require('request');
@@ -21,8 +20,6 @@ app.set('view engine', 'hbs')
 // middleware
 app.use(cors())
 app.use(bodyParser.json());
-app.use(timeout('100s'));
-app.use(haltOnTimedout);
 app.use(express.static(__dirname + "/../public"))
 
 
@@ -44,11 +41,8 @@ app.get('/learn', (req, res) => {
   res.render('learn')
 });
 
-function haltOnTimedout (req, res, next) {
-  if (!req.timedout) next()
-}
 
-app.post('/generate', timeout('100s'), haltOnTimedout, (req, res) => {
+app.post('/generate', (req, res) => {
   var data = req.body
 
   //Reads the Base Template from the Views Folder
@@ -73,7 +67,7 @@ app.post('/generate', timeout('100s'), haltOnTimedout, (req, res) => {
 
 });
 
-app.post('/generate-and-send', timeout('100s'), haltOnTimedout, (req, res) => {
+app.post('/generate-and-send', (req, res) => {
   var data = req.body
   //Reads the Base Template from the Views Folder
   var template = hbs.compile(fs.readFileSync(Template.choosePathToEngine(data), 'utf8'));
