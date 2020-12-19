@@ -13,5 +13,6 @@ SWE Resume Generator
 * Text suggestions
 * Auto-Fix JSON on the fly
 
-### Contributor Email
+### Contributor
+<img src="https://avatars2.githubusercontent.com/u/25255706?s=400&u=51a449ab34ca57655eb0af0ada7fd1ebf6d8517e&v=4" alt="victor" width="30" />
  vicksemmanuel58@gmail.com
